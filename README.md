@@ -1,5 +1,7 @@
 # hydra-frontend
-Hydra frontend application
+Hydra frontend application 
+
+[![Build Status](https://travis-ci.org/lordoftheflies/hydra-frontend.svg?branch=master)](https://travis-ci.org/lordoftheflies/hydra-frontend)
 
 Polymer App Toolbox - Starter Kit + I18N support with [i18n-behavior](https://github.com/t2ym/i18n-behavior)
 
