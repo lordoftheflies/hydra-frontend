@@ -1,5 +1,5 @@
 {
-  "name": "polymer-starter-kit-i18n",
+  "name": "hydra-frontend",
   "keywords": [
     "polymer",
     "web-component",
@@ -11,7 +11,7 @@
     "format"
   ],
   "authors": [
-    "The Polymer Authors"
+    "lordoftheflies"
   ],
   "private": true,
   "dependencies": {
