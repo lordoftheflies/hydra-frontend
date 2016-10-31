@@ -1,0 +1,12 @@
+{
+  "meta": {},
+  "model": {
+    "form_1:div:paper-input": {
+      "label": "Username"
+    },
+    "form_1:div:paper-input_1": {
+      "label": "Password"
+    }
+  },
+  "form_1:div_1:paper-button": "Sign in"
+}

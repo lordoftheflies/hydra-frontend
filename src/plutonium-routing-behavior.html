@@ -1,0 +1,55 @@
+
+<script>
+    window.Plutonium = window.Plutonium || {};
+
+    /**
+     * Application routing behavior implementation.
+     *
+     * @polymerBehavior
+     */
+    Plutonium.ApplicationRoutingBehaviorImpl = {
+        properties: {
+            _signedIn: {
+                type: Boolean,
+                value: false,
+                notify: true
+            },
+            page: {
+                type: String,
+                reflectToAttribute: true,
+                observer: '_pageChanged'
+            }
+        },
+        observers: [
+            '_routePageChanged(routeData.page)'
+        ],
+        _routePageChanged: function (page) {
+            this.page = page || 'view1';
+        },
+        _pageChanged: function (page) {
+            // Load page import on demand. Show 404 page if fails
+            var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+            this.importHref(resolvedPageUrl, null, this._showPage404, true);
+        },
+        _showPage404: function () {
+            this.page = 'view404';
+        },
+        _onUserAjaxResponse: function (event, response) {
+            console.debug(this.is, 'user session fetched.');
+            this.set('route.path', '/');
+        },
+        _onUserAjaxError: function (event, error) {
+            console.warn(this.is, 'user session fetching failed.');
+            this.set('route.path', '/login');
+        },
+    };
+
+    /**
+     * Application routing behavior.
+     *
+     * @polymerBehavior
+     */
+    Plutonium.ApplicationRoutingBehavior = [
+        ApplicationRoutingBehaviorImpl
+    ];
+</script>
