@@ -3,28 +3,28 @@
     "todo": [
       {
         "op": "add",
-        "path": "/model/form_1:div:paper-input/label",
+        "path": "/model/loginForm:div:paper-input/label",
         "value": "Username"
       },
       {
         "op": "add",
-        "path": "/model/form_1:div:paper-input_1/label",
+        "path": "/model/loginForm:div:paper-input_1/label",
         "value": "Password"
       },
       {
         "op": "add",
-        "path": "/form_1:div_1:paper-button",
+        "path": "/loginForm:div_1:paper-button",
         "value": "Sign in"
       }
     ]
   },
   "model": {
-    "form_1:div:paper-input": {
+    "loginForm:div:paper-input": {
       "label": "Username"
     },
-    "form_1:div:paper-input_1": {
+    "loginForm:div:paper-input_1": {
       "label": "Password"
     }
   },
-  "form_1:div_1:paper-button": "Sign in"
+  "loginForm:div_1:paper-button": "Sign in"
 }

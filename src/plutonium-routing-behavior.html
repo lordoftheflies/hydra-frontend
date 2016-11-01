@@ -14,6 +14,10 @@
                 value: false,
                 notify: true
             },
+            _resourceHeaders: {
+                type: Object,
+                computed: '_computeResourceHeaders(_authenticationHeaders)'
+            },
             page: {
                 type: String,
                 reflectToAttribute: true,
@@ -21,10 +25,14 @@
             }
         },
         observers: [
-            '_routePageChanged(routeData.page)'
+            '_routePageChanged(routeData.page, _signedIn)'
         ],
-        _routePageChanged: function (page) {
-            this.page = page || 'view1';
+        _routePageChanged: function (page, _signedIn) {
+            if (_signedIn) {
+                this.page = page || 'view1';
+            } else {
+                this.page = 'login';
+            }
         },
         _pageChanged: function (page) {
             // Load page import on demand. Show 404 page if fails
@@ -33,6 +41,12 @@
         },
         _showPage404: function () {
             this.page = 'view404';
+        },
+        _computeResourceHeaders: function (authenticationHeaders) {
+            var headers = authenticationHeaders || {};
+            headers['X-Requested-With'] = 'XMLHttpRequest';
+            headers['X-Requested-By'] = document.location.hostname;
+            return headers;
         },
         _onUserAjaxResponse: function (event, response) {
             console.debug(this.is, 'user session fetched.');
@@ -50,6 +64,6 @@
      * @polymerBehavior
      */
     Plutonium.ApplicationRoutingBehavior = [
-        ApplicationRoutingBehaviorImpl
+        Plutonium.ApplicationRoutingBehaviorImpl
     ];
 </script>

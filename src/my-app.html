@@ -67,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         </style>
 
-        <app-location route="{{route}}"></app-location>
+        <app-location route="{{route}}" use-hash-as-path></app-location>
         <app-route
             route="{{route}}"
             pattern="/:page"
@@ -75,8 +75,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             tail="{{subroute}}"></app-route>
 
         <iron-ajax 
-            id="userAjax" url="/user/info" 
-            last-response="{{user}}" on-response="_onUserAjaxResponse" on-error="_onUserAjaxError"
+            id="userAjax" url="/ui/user" 
+            headers="[[_resourceHeaders]]" last-response="{{user}}" 
+            on-response="_onUserAjaxResponse" on-error="_onUserAjaxError"
             method="GET" auto></iron-ajax>
 
 
@@ -85,9 +86,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                            <app-drawer>
                 <app-toolbar>Menu</app-toolbar>
                 <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-                    <a name="view1" href="/view1">View One</a>
-                    <a name="view2" href="/view2">View Two</a>
-                    <a name="view3" href="/view3">View Three</a>
+                    <a name="view1" href="#/view1">View One</a>
+                    <a name="view2" href="#/view2">View Two</a>
+                    <a name="view3" href="#/view3">View Three</a>
                 </iron-selector>
             </app-drawer>
 
