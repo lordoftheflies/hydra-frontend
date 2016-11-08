@@ -25,7 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         </style>
 
-        <form id="loginForm" is="iron-form" action="/ui/login" method="post" headers="[[authenticationHeaders]]" content-type="application/x-www-form-urlencoded">
+        <form id="loginForm" is="iron-form" action="/ui/login" method="post" headers="[[authenticationHeaders]]" content-type="application/json">
             <div>
                 <paper-input name="username" type="text" label="Username" value="{{_username}}"></paper-input>
                 <paper-input name="password" type="password" label="Password" value="{{_password}}"></paper-input>
@@ -57,16 +57,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             observers: [
                 '_observeAuthenticationHeaders(_username, _password)'
             ],
+            listeners: {
+              'iron-form-response': '_onLoginAjaxResponse',  
+              'iron-form-error': '_onLoginAjaxError'  
+            },
             _observeAuthenticationHeaders: function(_username, _password) {
                 this.authenticationHeaders = {
-                    authorization: "Basic " + btoa(this._username + ":" + this._password)
+                    Authorization: "Basic " + btoa(_username + ":" + _password)
                 };
             },
             _onLogin: function (event, detail) {
                 console.debug(this.is, this._username, 'logging in ...');
                 this.$.loginForm.submit();
             },
-            _onLoginAjaxRequest: function (event, detail) {
+            _onLoginAjaxResponse: function (event, detail) {
                 console.debug(this.is, this._username, 'logged in successfully.');
                 this.signedIn = true;
             },

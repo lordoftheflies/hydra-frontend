@@ -21,7 +21,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+<link rel="import" href="../bower_components/plutonium-avatar-button/plutonium-avatar-button.html">
 <link rel="import" href="my-icons.html">
 
 <link rel="import" href="plutonium-routing-behavior.html">
@@ -78,10 +80,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             id="userAjax" url="/ui/user" 
             headers="[[_resourceHeaders]]" last-response="{{user}}" 
             on-response="_onUserAjaxResponse" on-error="_onUserAjaxError"
-            method="GET" auto></iron-ajax>
+            method="GET" auto$="[[_signedIn]]"></iron-ajax>
+        <iron-ajax 
+            id="logoutAjax" url="/ui/logout" 
+            headers="[[_resourceHeaders]]" 
+            on-response="_onLogoutAjaxResponse" on-error="_onLogoutAjaxError"
+            method="POST"></iron-ajax>
 
-
-        <app-drawer-layout fullbleed hidden$="[[signedIn]]">
+        <app-drawer-layout fullbleed force-narrow$="[[!_signedIn]]">
                            <!-- Drawer content -->
                            <app-drawer>
                 <app-toolbar>Menu</app-toolbar>
@@ -97,8 +103,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 <app-header condenses reveals effects="waterfall">
                     <app-toolbar>
-                        <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+                        <template is="dom-if" if="[[_signedIn]]">
+                            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+                        </template>
                         <div main-title>Hydra RMD</div>
+                        <template is="dom-if" if="[[_signedIn]]">
+                            <plutonium-avatar-button user="{{user}}">
+                                <a href="/profile-view" class="menu">
+                                    <paper-item class="menu">
+                                        <iron-icon icon="account-circle" item-icon></iron-icon>
+                                        <span id="profileMenuTitle">Profile</span>
+                                    </paper-item>
+                                </a>
+                                <a href="#" on-tap="_onLogout" class="menu">
+                                    <paper-item class="menu">
+                                        <iron-icon icon="markunread-mailbox" item-icon></iron-icon>
+                                        <span id="logoutButtonLabel">Logout</span>
+                                    </paper-item>
+                                </a>
+                            </plutonium-avatar-button>
+                        </template>
                     </app-toolbar>
                 </app-header>
 
@@ -129,7 +153,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             ],
             properties: {
             },
-            
         });
     </script>
 </dom-module>

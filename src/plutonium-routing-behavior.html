@@ -30,7 +30,9 @@
         _routePageChanged: function (page, _signedIn) {
             if (_signedIn) {
                 this.page = page || 'view1';
+                console.debug(this.is, 'secure navigate to', this.page);
             } else {
+                console.debug(this.is, 'unsecure navigate to', this.page);
                 this.page = 'login';
             }
         },
@@ -50,11 +52,27 @@
         },
         _onUserAjaxResponse: function (event, response) {
             console.debug(this.is, 'user session fetched.');
+            this._signedIn = true;
             this.set('route.path', '/');
         },
         _onUserAjaxError: function (event, error) {
             console.warn(this.is, 'user session fetching failed.');
+            this._signedIn = false;
             this.set('route.path', '/login');
+        },
+        _onLogout: function() {
+            console.debug(this.is, 'logout');
+            this.$.logoutAjax.generateRequest();
+        },
+        _onLogoutAjaxResponse: function() {
+            console.debug(this.is, 'logged out');
+            this._signedIn = false;
+            this.set('route.path', '/login');
+        },
+        _onLogoutAjaxError: function() {
+            console.warn(this.is, 'logout failed');
+            this._signedIn = true;
+            this.set('route.path', '/');
         },
     };
 
