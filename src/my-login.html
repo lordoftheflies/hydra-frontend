@@ -25,7 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         </style>
 
-        <form id="loginForm" is="iron-form" action="/ui/login" method="post" headers="[[authenticationHeaders]]" content-type="application/json">
+        <form id="loginForm" is="iron-form" action="[[apiUrl]]/ui/login" method="post" headers="[[authenticationHeaders]]" content-type="application/json">
             <div>
                 <paper-input name="username" type="text" label="Username" value="{{_username}}"></paper-input>
                 <paper-input name="password" type="password" label="Password" value="{{_password}}"></paper-input>
@@ -43,6 +43,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 BehaviorsStore.I18nBehavior
             ],
             properties: {
+                apiUrl: {
+                    type: String,
+                    notify: true
+                },
                 signedIn: {
                     type: Boolean,
                     notify: true,

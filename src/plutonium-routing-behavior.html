@@ -16,7 +16,11 @@
             },
             _resourceHeaders: {
                 type: Object,
-                computed: '_computeResourceHeaders(_authenticationHeaders)'
+                notify: true
+            },
+            _token: {
+                type: Object,
+                notify: true
             },
             page: {
                 type: String,
@@ -25,7 +29,9 @@
             }
         },
         observers: [
-            '_routePageChanged(routeData.page, _signedIn)'
+            '_routePageChanged(routeData.page, _signedIn)',
+            '_computeAuthenticationToken(_resourceHeaders, _token)',
+            '_computeResourceHeaders(_authenticationHeaders)'
         ],
         _routePageChanged: function (page, _signedIn) {
             if (_signedIn) {
@@ -44,32 +50,43 @@
         _showPage404: function () {
             this.page = 'view404';
         },
+        _computeAuthenticationToken: function (accumulatedHeaders, token) {
+            var headers = accumulatedHeaders || {};
+            headers['X-Auth-Token'] = token.token;
+            this._resourceHeaders = headers;
+        },
         _computeResourceHeaders: function (authenticationHeaders) {
             var headers = authenticationHeaders || {};
             headers['X-Requested-With'] = 'XMLHttpRequest';
             headers['X-Requested-By'] = document.location.hostname;
-            return headers;
+            this._resourceHeaders = headers;
+        },
+        _onTokenAjaxResponse: function (event, response) {
+            console.debug(this.is, 'session fetched.');
+        },
+        _onTokenAjaxError: function (event, error) {
+            console.debug(this.is, 'session synchronization failed.');
         },
         _onUserAjaxResponse: function (event, response) {
-            console.debug(this.is, 'user session fetched.');
+            console.debug(this.is, 'user fetched.');
             this._signedIn = true;
             this.set('route.path', '/');
         },
         _onUserAjaxError: function (event, error) {
-            console.warn(this.is, 'user session fetching failed.');
+            console.warn(this.is, 'user fetching failed.');
             this._signedIn = false;
             this.set('route.path', '/login');
         },
-        _onLogout: function() {
+        _onLogout: function () {
             console.debug(this.is, 'logout');
             this.$.logoutAjax.generateRequest();
         },
-        _onLogoutAjaxResponse: function() {
+        _onLogoutAjaxResponse: function () {
             console.debug(this.is, 'logged out');
             this._signedIn = false;
             this.set('route.path', '/login');
         },
-        _onLogoutAjaxError: function() {
+        _onLogoutAjaxError: function () {
             console.warn(this.is, 'logout failed');
             this._signedIn = true;
             this.set('route.path', '/');

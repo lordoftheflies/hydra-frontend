@@ -77,6 +77,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             tail="{{subroute}}"></app-route>
 
         <iron-ajax 
+            id="tokenAjax" url="/ui/token" 
+            headers="[[_resourceHeaders]]" last-response="{{_token}}" 
+            on-response="_onTokenAjaxResponse" on-error="_onTokenAjaxError"
+            method="GET" auto$="[[_signedIn]]"></iron-ajax>
+        
+        <iron-ajax 
             id="userAjax" url="/ui/user" 
             headers="[[_resourceHeaders]]" last-response="{{user}}" 
             on-response="_onUserAjaxResponse" on-error="_onUserAjaxError"
@@ -106,7 +112,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <template is="dom-if" if="[[_signedIn]]">
                             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
                         </template>
-                        <div main-title>Hydra RMD</div>
+                        <div main-title>[[title]]</div>
                         <template is="dom-if" if="[[_signedIn]]">
                             <plutonium-avatar-button user="{{user}}">
                                 <a href="/profile-view" class="menu">
@@ -133,6 +139,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     role="main">
                     <my-login
                         name="login"
+                        api-url="http://localhost:9000"
                         signed-in="{{_signedIn}}">
                     </my-login>
                     <my-view1 name="view1"></my-view1>
@@ -147,11 +154,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script>
         Polymer({
             is: 'my-app',
+//            extends: 'div',
             behaviors: [
                 BehaviorsStore.I18nBehavior,
                 Plutonium.ApplicationRoutingBehavior
             ],
             properties: {
+                title: {
+                    type: Object,
+                    notify: true
+                }
             },
         });
     </script>

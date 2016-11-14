@@ -4,28 +4,23 @@
       "todo": [
         {
           "op": "add",
-          "path": "/app-drawer-layout_5:app-drawer:app-toolbar",
+          "path": "/app-drawer-layout_6:app-drawer:app-toolbar",
           "value": "Menu"
         },
         {
           "op": "add",
-          "path": "/app-drawer-layout_5:app-drawer:iron-selector_1:a",
+          "path": "/app-drawer-layout_6:app-drawer:iron-selector_1:a",
           "value": "View One"
         },
         {
           "op": "add",
-          "path": "/app-drawer-layout_5:app-drawer:iron-selector_1:a_1",
+          "path": "/app-drawer-layout_6:app-drawer:iron-selector_1:a_1",
           "value": "View Two"
         },
         {
           "op": "add",
-          "path": "/app-drawer-layout_5:app-drawer:iron-selector_1:a_2",
+          "path": "/app-drawer-layout_6:app-drawer:iron-selector_1:a_2",
           "value": "View Three"
-        },
-        {
-          "op": "replace",
-          "path": "/app-drawer-layout_5:app-header-layout_1:app-header:app-toolbar:div_1",
-          "value": "Hydra RMD"
         },
         {
           "op": "add",
@@ -40,11 +35,10 @@
       ]
     },
     "model": {},
-    "app-drawer-layout_5:app-drawer:app-toolbar": "Menu",
-    "app-drawer-layout_5:app-drawer:iron-selector_1:a": "View One",
-    "app-drawer-layout_5:app-drawer:iron-selector_1:a_1": "View Two",
-    "app-drawer-layout_5:app-drawer:iron-selector_1:a_2": "View Three",
-    "app-drawer-layout_5:app-header-layout_1:app-header:app-toolbar:div_1": "Hydra RMD",
+    "app-drawer-layout_6:app-drawer:app-toolbar": "Menu",
+    "app-drawer-layout_6:app-drawer:iron-selector_1:a": "View One",
+    "app-drawer-layout_6:app-drawer:iron-selector_1:a_1": "View Two",
+    "app-drawer-layout_6:app-drawer:iron-selector_1:a_2": "View Three",
     "profileMenuTitle": "Profile",
     "logoutButtonLabel": "Logout"
   },
